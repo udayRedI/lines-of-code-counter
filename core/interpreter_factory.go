@@ -17,9 +17,21 @@ func (j *javaInterpreterFactory) getSingleCommentLineRule() Rule {
 	return &SingleCommentLineRule{commentPattern: "//"}
 }
 
-func GetInterterByLanguage(language string) (interpreterFactory, error) {
-	if language == "java" {
+type goInterpreterFactory struct{}
+
+func (j *goInterpreterFactory) getBlankLineRule() Rule {
+	return &BlankLineRule{}
+}
+
+func (j *goInterpreterFactory) getSingleCommentLineRule() Rule {
+	return &SingleCommentLineRule{commentPattern: "//"}
+}
+
+func GetInterterByLanguage(fileExtension string) (interpreterFactory, error) {
+	if fileExtension == "java" {
 		return &javaInterpreterFactory{}, nil
+	} else if fileExtension == "go" {
+		return &goInterpreterFactory{}, nil
 	}
 	return nil, errors.New("invalid language")
 }

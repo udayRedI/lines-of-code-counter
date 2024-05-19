@@ -46,7 +46,7 @@ func (f *fileExtractor) Extract(fileName string) ([]string, *string, error) {
 	return fileContents, &extension, nil
 }
 
-type fileProcessor struct {
+type FileProcessor struct {
 	CodeCount    uint32
 	CommentCount uint32
 	BlankCount   uint32
@@ -55,7 +55,7 @@ type fileProcessor struct {
 	fileExtractor iFileExtractor
 }
 
-func (j *fileProcessor) Process(fileName string) error {
+func (j *FileProcessor) Process(fileName string) error {
 	fileContents, extension, fileErr := j.fileExtractor.Extract(fileName)
 	if fileErr != nil {
 		return fileErr
@@ -78,9 +78,9 @@ func (j *fileProcessor) Process(fileName string) error {
 	return nil
 }
 
-func NewFileProcessor() *fileProcessor {
+func NewFileProcessor() *FileProcessor {
 	fileExt := fileExtractor{}
-	return &fileProcessor{
+	return &FileProcessor{
 		fileExtractor: &fileExt,
 	}
 }
