@@ -51,6 +51,7 @@ type FileProcessor struct {
 	CommentCount uint32
 	BlankCount   uint32
 	TotalCount   uint32
+	fileName     string
 
 	fileExtractor iFileExtractor
 }
@@ -66,6 +67,7 @@ func (j *FileProcessor) Process(fileName string) error {
 	}
 
 	j.TotalCount = uint32(len(fileContents))
+	j.fileName = fileName
 	for _, line := range fileContents {
 		if interpreter.getBlankLineRule().IsValid(line) {
 			j.BlankCount++
@@ -76,6 +78,16 @@ func (j *FileProcessor) Process(fileName string) error {
 		}
 	}
 	return nil
+}
+
+func (j *FileProcessor) Report() {
+	fmt.Printf("File Name: %s\n", j.fileName)
+	fmt.Printf("Code Count: %d\n", j.CodeCount)
+	fmt.Printf("Comment Count: %d\n", j.CommentCount)
+	fmt.Printf("Blank Count: %d\n", j.BlankCount)
+	fmt.Printf("Total Count: %d\n", j.TotalCount)
+	fmt.Printf("\n")
+	fmt.Printf("\n")
 }
 
 func NewFileProcessor() *FileProcessor {
