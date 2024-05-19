@@ -19,7 +19,7 @@ func TestJavaFileProcessor(t *testing.T) {
 
 	type testCase struct {
 		title                 string
-		expectedFileProcessor fileProcessor
+		expectedFileProcessor FileProcessor
 		fileExtractor         iFileExtractor
 		expError              error
 	}
@@ -27,7 +27,7 @@ func TestJavaFileProcessor(t *testing.T) {
 	testCases := []testCase{
 		{
 			title: "should have valid count",
-			expectedFileProcessor: fileProcessor{
+			expectedFileProcessor: FileProcessor{
 				CodeCount:    5,
 				CommentCount: 1,
 				BlankCount:   2,
@@ -99,7 +99,7 @@ func TestJavaFileProcessor(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.title, func(t *testing.T) {
-			processor := fileProcessor{}
+			processor := FileProcessor{}
 			processor.fileExtractor = tc.fileExtractor
 			gotErr := processor.Process("TestFile.java")
 			errCheck(gotErr, tc)
